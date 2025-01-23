@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(title: 'Project Management', home: ProjectStepper());
+  }
+}
+
+class ProjectStepper extends StatefulWidget {
+  const ProjectStepper({super.key});
+
+  @override
+  State<ProjectStepper> createState() => _ProjectStepperState();
+}
+
+class _ProjectStepperState extends State<ProjectStepper> {
+  int currentStep = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Create new project")),
+      body: Stepper(
+        currentStep: currentStep,
+        onStepContinue: () {
+          if (currentStep < 4) {
+            setState(() => currentStep++);
+          }
+        },
+        onStepCancel: () {
+          if (currentStep > 0) {
+            setState(() => currentStep--);
+          }
+        },
+        steps: [
+          Step(title: Text("Project Details"), content: projectDetailsForm()),
+          Step(title: Text("Team Members"), content: teamMembersForm()),
+          Step(title: Text("Timeline"), content: timelineForm()),
+          Step(title: Text("Budget"), content: budgetForm()),
+          Step(title: Text("Review & Submit"), content: reviewSubmitForm()),
+        ],
+      ),
+    );
+  }
+
+  Widget projectDetailsForm() {
+    return Column(
+      children: [
+        TextField(
+          decoration: InputDecoration(labelText: "Project Name"),
+        ),
+        TextField(
+          decoration: InputDecoration(labelText: "Project Description"),
+        ),
+      ],
+    );
+  }
+
+  Widget teamMembersForm() {
+    String? selectedRole;
+    return Column(
+      children: [
+        TextField(
+          decoration: InputDecoration(labelText: "Add Team Member"),
+        ),
+        DropdownButton<String>(
+          value: selectedRole,
+          items: <String>['Logistics', 'IT', 'Texx'].map((String value) {
+            return DropdownMenuItem<String>( 
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            setState(() {
+              selectedRole = newValue;
+            });
+          },
+          hint: Text("Select Role"),
+        ),
+      ],
+    );
+  }
+
+  Widget timelineForm() {
+
+    return Center(child: Text("Timeline Form"));
+  }
+
+  Widget budgetForm() {
+    return Center(child: Text("Budget Form"));
+  }
+
+  Widget reviewSubmitForm() {
+    return Center(child: Text("Review & Submit Form"));
+  }
+}
