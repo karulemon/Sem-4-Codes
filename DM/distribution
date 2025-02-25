@@ -1,0 +1,11 @@
+#binomial distribution
+x=dbinom(3,5,0.25)
+#0.08789063
+y=pbinom(3,5,0.25)
+#0.984375
+x1=0:5
+y1=dbinom(x1,size=5,prob=0.25)
+plot(x1,y1,main='Binomial Distribution',xlab='var of x',ylab = 'Probability', type='h')
+
+#Poisson distribution
+dpois(2,lambda = 3)
